@@ -2,10 +2,10 @@ package Env;
 
 import Symbol.Symbol;
 import Symbol.Table;
-import Types.BOOL;
+/*import Types.BOOL;
 import Types.INT;
 import Types.REAL;
-import Types.STRING;
+import Types.STRING;*/
 import Types.Type;
 import Types.UNIT;
 

@@ -3,8 +3,8 @@ package Symbol;
 import java.util.Hashtable;
 import java.util.Map;
 
-import Util.ToTree;
-import Util.Tree_;
+import util.ToTree;
+import util.Tree_;
 
 public class Symbol implements ToTree<String>
 {

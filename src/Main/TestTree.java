@@ -1,8 +1,8 @@
 package Main;
 
-import Util.Tree_;
 import javaslang.collection.Iterator;
 import javaslang.collection.Tree;
+import util.Tree_;
 
 public class TestTree {
 
