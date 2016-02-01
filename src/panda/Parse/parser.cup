@@ -1,0 +1,77 @@
+// panda.cup    -*- mode: Java -*-
+
+package panda.Parse;
+
+import panda.Absyn.*;
+import javaslang.collection.List;
+import panda.ErrorMsg.Loc;
+import panda.ErrorMsg.ErrorMsg;
+import panda.Symbol.Symbol;
+
+import java_cup.runtime.SymbolFactory;
+import java_cup.runtime.ComplexSymbolFactory.ComplexSymbol;
+
+
+// Routines and variables for use by the code embedded in the grammar
+action code
+{:
+  //static Loc loc()
+  //{
+  //  return new Loc();
+  //}
+
+  Loc loc(Location left, Location right) {
+    return parser.loc(left, right);
+  }
+:};
+
+// Methods and variables to be placed directly within the generated parser class
+parser code
+{:
+  ErrorMsg errorMsg;
+  
+  public PandaCup(PandaLex lex, SymbolFactory symbolFactory, ErrorMsg errorMsg) {
+    this(lex, symbolFactory);
+    this.errorMsg = errorMsg;
+  }
+
+  Loc loc(Location left, Location right) {
+    return new Loc(left, right);
+  }
+ 
+  public void report_error(String message, Object info) {
+    Loc loc;
+    if (info instanceof ComplexSymbol) {
+      ComplexSymbol tok = (ComplexSymbol) info;
+      loc = loc(tok.xleft, tok.xright);
+      message += ": " + Tokens.dumpToken(tok);
+    }
+    else
+      loc = new Loc();
+    errorMsg.error(loc, message);
+  }
+
+  public void syntax_error(java_cup.runtime.Symbol tok) {
+    report_error("syntax error", tok);
+  }
+:}
+
+terminal Long LITINT;
+terminal Boolean LITBOOL;
+terminal 		IF, THEN, ELSE;
+	
+non terminal Exp program;
+non terminal Exp exp;
+
+start with program;
+
+program ::=
+  exp:x                                                  {: RESULT = x; :}
+  ;
+
+exp ::=
+  LITINT:x                                               {: RESULT = new IntExp(loc(xxleft,xxright),x); :}
+| LITBOOL:x                                               {: RESULT = new BoolExp(loc(xxleft,xxright),x); :}
+| IF:l exp:t THEN exp:a ELSE exp:b                              {: RESULT = new IfExpLoc(loc(xxleft,xxright),l, t, a, b); :}
+  ;
+
