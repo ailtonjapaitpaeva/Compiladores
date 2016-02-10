@@ -1,15 +1,15 @@
 package panda.Types;
 
-public class BOOL extends Type{
+public class BOOL extends Type {
 
-	public static final BOOL T = new BOOL();
+   public static final BOOL T = new BOOL();
 
-	private BOOL() {
-	}
+   private BOOL() {
+   }
 
-	@Override
-	public String toString() {
-		return "BOOL";
-	}
+   @Override
+   public String toString() {
+      return "BOOL";
+   }
 
 }

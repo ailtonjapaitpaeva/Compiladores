@@ -3,26 +3,10 @@ package panda.Util;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedList;
-
 import javax.swing.tree.DefaultMutableTreeNode;
-
-import javaslang.collection.List;
 import javaslang.collection.Tree;
 
 public class BoxTree {
-
-   public static <T> Box box(Tree<T> t) {
-      Box b = new Box(t.get().toString()).frame();
-      List<Tree.Node<T>> children = t.getChildren();
-      if (children.isEmpty())
-         return b;
-
-      LinkedList<Box> lst = new LinkedList<>();
-      for (Tree.Node<T> child : children)
-         lst.add(box(child));
-      return b.connect(lst);
-   }
 
    public static <T> void dot(Tree<T> t, File file) throws IOException {
       StringBuffer buffer = new StringBuffer();

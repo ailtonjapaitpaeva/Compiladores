@@ -19,6 +19,7 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 %cupsym panda.Parse.PandaSym
 %cup
 
+
 %eofval{
     return tok(EOF);
 %eofval} 
@@ -67,14 +68,14 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 
 "//" .*               { /* skip */ }
 
+if                    { return tok(IF); }
+then                  { return tok(THEN); }
+else                  { return tok(ELSE); }
+
 
 0 | [1-9][0-9]*       { return tok(LITINT, new Long(yytext())); }
 
-true | false       { return tok(LITBOOL, new Boolean(yytext())); }
-
-if       { return tok(IF); }
-then       { return tok(THEN); }
-else       { return tok(ELSE); }
+true | false          { return tok(LITBOOL, new Boolean(yytext())); }
 
 .                     { error("illegal character: [" + yytext() + "]"); }
 }

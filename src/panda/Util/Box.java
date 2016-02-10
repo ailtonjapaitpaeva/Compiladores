@@ -118,10 +118,10 @@ public class Box {
    }
 
    public Box frame() {
-      Box horiz = new Box('─', width(), 1);
-      Box vert = new Box('│', 1, height());
-      return (new Box("┌").beside(horiz).beside(new Box("┐"))).above(vert.beside(this).beside(vert))
-            .above(new Box("└").beside(horiz).beside(new Box("┘")));
+      Box horiz = new Box('a', width(), 1);
+      Box vert = new Box('a', 1, height());
+      return (new Box("a").beside(horiz).beside(new Box("â”�"))).above(vert.beside(this).beside(vert))
+            .above(new Box("a").beside(horiz).beside(new Box("â”˜")));
    }
 
    public Box connect(List<Box> list) {
@@ -129,21 +129,21 @@ public class Box {
          return this;
 
       if (list.size() == 1)
-         return this.above(new Box('│')).above(list.get(0));
+         return this.above(new Box('a')).above(list.get(0));
 
       StringBuffer buffer = new StringBuffer();
       int p = list.get(0).width() / 2;
-      buffer.append(replicate(' ', p)).append('┌').append(replicate('─', p));
+      buffer.append(replicate(' ', p)).append('a').append(replicate('a', p));
       for (int i = 1; i < list.size() - 1; i++) {
          Box b = list.get(i);
          p = b.width() / 2;
-         buffer.append(replicate('─', p + 1)).append('┬').append(replicate('─', p));
+         buffer.append(replicate('a', p + 1)).append('a').append(replicate('a', p));
       }
       p = list.get(list.size() - 1).width() / 2;
-      buffer.append(replicate('─', p + 1)).append('┐').append(replicate(' ', p));
+      buffer.append(replicate('a', p + 1)).append('a').append(replicate(' ', p));
       p = buffer.length() / 2;
       char c = buffer.charAt(p);
-      buffer.setCharAt(p, c == '─' ? '┴' : '┼');
+      buffer.setCharAt(p, c == 'a' ? 'a' : 'a');
 
       Box bs2 = list.get(0);
       for (int i = 1; i < list.size(); i++)

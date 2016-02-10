@@ -5,7 +5,7 @@ import panda.ErrorMsg.ErrorMsg;
 import panda.ErrorMsg.Loc;
 import panda.Util.ToTree;
 
-public abstract class Absyn implements ToTree< String > {
+public abstract class Absyn implements ToTree<String> {
    
    protected final Loc loc;
 
@@ -13,12 +13,12 @@ public abstract class Absyn implements ToTree< String > {
       this.loc = loc;
    }
 
-   protected void error(String msg) {
-      error(loc, msg);
+   protected void error(String format, Object... args) {
+      error(loc, format, args);
    }
 
-   protected static void error(Loc loc, String msg) {
-      E.error(loc, msg);
+   protected static void error(Loc loc, String format, Object... args) {
+      E.error(loc, format, args);
    }
 
    // a global error object

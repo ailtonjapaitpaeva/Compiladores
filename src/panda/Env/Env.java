@@ -17,14 +17,12 @@ public class Env {
       put(tenv, "unit", UNIT.T);
       put(tenv, "int", INT.T);
       put(tenv, "bool", BOOL.T);
-      
       // COMPLETAR COM OS DEMAIS TIPOS PRE-DEFINIDOS
 
       venv = new Table<Entry>();
-      put(venv, "print_int", 	new FunEntry(UNIT.T, INT.T));
-      put(venv, "print_bool",	new FunEntry(UNIT.T, BOOL.T));
-      put(venv, "not",			new FunEntry(UNIT.T, BOOL.T));
-      
+      put(venv, "print_int", new FunEntry(UNIT.T, INT.T));
+      put(venv, "print_bool", new FunEntry(UNIT.T, BOOL.T));
+      put(venv, "not", new FunEntry(BOOL.T, BOOL.T));
       // COMPLETAR COM AS DEMAIS VARIÁVEIS E FUNÇÔES PRE-DEFINIDAS      
    }
 

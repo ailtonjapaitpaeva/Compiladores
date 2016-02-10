@@ -2,6 +2,7 @@ package panda.Main;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -42,27 +43,8 @@ import panda.Parse.PandaCup;
 import panda.Parse.PandaLex;
 import panda.Util.BoxTree;
 
-
-class GuiErrorMsgs extends ErrorMsg {
-	   private JTextArea textArea;
-
-	   public GuiErrorMsgs(String f, JTextArea textArea) {
-	      // super(f);
-	      this.textArea = textArea;
-	   }
-
-	   @Override
-	public void error(Loc loc, String msg) {
-	      Absyn.E.errorCounter++;
-	      Formatter fmt = new Formatter();
-	      fmt.format("%s %s\n", loc, msg);
-	      textArea.append(fmt.toString());
-	      fmt.close();
-	   }
-	}
-
 @SuppressWarnings("serial")
-public class SemantTestGui extends JFrame implements ActionListener {
+public class SemantGui extends JFrame implements ActionListener {
    private GridBagLayout layout = new GridBagLayout();
    private GridBagConstraints constraints = new GridBagConstraints();
 
@@ -81,7 +63,7 @@ public class SemantTestGui extends JFrame implements ActionListener {
 
    private Exp exp;
 
-   public SemantTestGui() {
+   public SemantGui() {
       super("Tiger Compiler");
       setLayout(layout);
 
@@ -115,6 +97,7 @@ public class SemantTestGui extends JFrame implements ActionListener {
       chooser = new JFileChooser();
 
       programArea = new JTextArea(12, 80);
+      programArea.setFont(new Font("Courier", Font.BOLD, 18));
       JScrollPane scrollPane = new JScrollPane(programArea);
       addComponent(scrollPane, 1, 0, 7, 1, GridBagConstraints.BOTH);
 
@@ -151,7 +134,7 @@ public class SemantTestGui extends JFrame implements ActionListener {
    }
 
    public static void main(String args[]) throws Exception {
-      SemantTestGui application = new SemantTestGui();
+      SemantGui application = new SemantGui();
       application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       application.setVisible(true);
    }
@@ -169,18 +152,17 @@ public class SemantTestGui extends JFrame implements ActionListener {
          file.close();
          programArea.setText(str.toString());
       } catch (FileNotFoundException e1) {
-         JOptionPane.showMessageDialog(SemantTestGui.this, "File not found:\n" + fileField.getText(),
+         JOptionPane.showMessageDialog(SemantGui.this, "File not found:\n" + fileField.getText(),
                "Error reading file", JOptionPane.ERROR_MESSAGE);
       } catch (IOException e2) {
-         JOptionPane.showMessageDialog(SemantTestGui.this, "Error reading file:\n" + fileField.getText(),
+         JOptionPane.showMessageDialog(SemantGui.this, "Error reading file:\n" + fileField.getText(),
                "Error reading file", JOptionPane.ERROR_MESSAGE);
       }
    }
 
-   @Override
-public void actionPerformed(ActionEvent e) {
+   public void actionPerformed(ActionEvent e) {
       if (e.getSource() == openButton) {
-         int returnVal = chooser.showOpenDialog(SemantTestGui.this);
+         int returnVal = chooser.showOpenDialog(SemantGui.this);
          if (returnVal == JFileChooser.APPROVE_OPTION)
             fileField.setText(chooser.getSelectedFile().getPath());
          readSource();
@@ -189,7 +171,7 @@ public void actionPerformed(ActionEvent e) {
          String filePath = fileField.getText().trim();
          if (!filePath.isEmpty())
             chooser.setSelectedFile(new File(filePath));
-         int returnVal = chooser.showSaveDialog(SemantTestGui.this);
+         int returnVal = chooser.showSaveDialog(SemantGui.this);
          if (returnVal == JFileChooser.APPROVE_OPTION) {
             filePath = chooser.getSelectedFile().getPath();
             try {
@@ -198,7 +180,7 @@ public void actionPerformed(ActionEvent e) {
                file.close();
                fileField.setText(filePath);
             } catch (IOException e1) {
-               JOptionPane.showMessageDialog(SemantTestGui.this, "Error writing file:\n" + filePath,
+               JOptionPane.showMessageDialog(SemantGui.this, "Error writing file:\n" + filePath,
                      "Error writing file", JOptionPane.ERROR_MESSAGE);
             }
          }
@@ -215,7 +197,7 @@ public void actionPerformed(ActionEvent e) {
    }
 
    private void compileProgram() {
-      ErrorMsg errorMsg = new GuiErrorMsgs(fileField.getText(), logArea);
+      ErrorMsg errorMsg = new GuiErrorMsg(fileField.getText(), logArea);
       Absyn.E = errorMsg;
       StringReader file = new StringReader(programArea.getText());
       
@@ -236,7 +218,7 @@ public void actionPerformed(ActionEvent e) {
          // logArea.append(et.exp.toString());
       } catch (Exception e) {
          // e.printStackTrace();
-         JOptionPane.showMessageDialog(SemantTestGui.this, "Error compiling program\n", "Error compiling program",
+         JOptionPane.showMessageDialog(SemantGui.this, "Error compiling program\n", "Error compiling program",
                JOptionPane.ERROR_MESSAGE);
       }
 
@@ -254,7 +236,7 @@ public void actionPerformed(ActionEvent e) {
             String cmd[] = { "dot", "-Tpng", "-o", tempfile2.getPath(), tempfile.getPath() };
             Process proc = Runtime.getRuntime().exec(cmd, null, tempfile.getParentFile());
             proc.waitFor();
-            dialog = new JDialog(SemantTestGui.this, "Parse Tree");
+            dialog = new JDialog(SemantGui.this, "Parse Tree");
             dialog.setLayout(layout);
             Icon icon = new ImageIcon(tempfile2.getPath());
             JLabel label = new JLabel(icon);
@@ -271,4 +253,19 @@ public void actionPerformed(ActionEvent e) {
    }
 }
 
+class GuiErrorMsg extends ErrorMsg {
+   private JTextArea textArea;
 
+   public GuiErrorMsg(String f, JTextArea textArea) {
+      // super(f);
+      this.textArea = textArea;
+   }
+
+   public void error(Loc loc, String msg) {
+      Absyn.E.errorCounter++;
+      Formatter fmt = new Formatter();
+      fmt.format("%s %s\n", loc, msg);
+      textArea.append(fmt.toString());
+      fmt.close();
+   }
+}

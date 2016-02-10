@@ -1,4 +1,4 @@
-    <project name="MyProject" default="compile" basedir=".">
+    <project name="Panda" default="compile" basedir=".">
 	
 	  <property name="java"     location="src"       />
 	  <property name="classes"  location="bin/cls"   />
@@ -17,7 +17,7 @@
 	          parser="PandaCup"
 	    	  symbols="PandaSym"
 			  interface="true"
-	    	  expect="0"
+	    	  expect="1"
 	  	      locations="true"
 	          debugsymbols="true" />
 	  	<jflex  file="${java}/panda/Parse/lexer.jflex" destdir="${java}" />
@@ -26,6 +26,7 @@
 	  <path id="libraries">
         <files includes="${tools}/java-cup-11b-runtime.jar" />
         <files includes="${tools}/javaslang-2.0.0-RC3.jar" />
+        <files includes="${tools}/javaslang-render.jar" />
 	  </path>
 
 	  <target name="compile" depends="generate">
@@ -44,15 +45,5 @@
 	    <delete dir="${classes}" />
 	    <delete dir="${result}" />
 	  </target>
-
-    <!--
-      <dependencies>
-        <dependency>
-            <groupId>com.javaslang</groupId>
-            <artifactId>javaslang</artifactId>
-            <version>2.0.0-RC3</version>
-        </dependency>
-      </dependencies>
-    -->
 
     </project>

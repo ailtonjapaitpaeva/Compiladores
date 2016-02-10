@@ -21,4 +21,8 @@ public class ErrorMsg {
       errorCounter++;
       System.out.printf("%s %s\n", loc, msg);
    }
+   
+   public void error(Loc loc, String format, Object... args) {
+      error(loc, String.format(format, args));
+   }
 }

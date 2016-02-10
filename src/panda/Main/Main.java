@@ -1,11 +1,13 @@
 package panda.Main;
 
+
 import java_cup.runtime.ComplexSymbolFactory;
 import panda.Absyn.Absyn;
 import panda.Absyn.Exp;
 import panda.Parse.PandaCup;
 import panda.Parse.PandaLex;
 import panda.Util.BoxTree;
+import javaslang.render.text.Boxes;
 
 public class Main {
 
@@ -33,7 +35,7 @@ public class Main {
          System.out.println("===Abstract syntax tree:===========");
          // System.out.println(parseTree.toTree().prettyPrint());
          // System.out.println();
-         System.out.println(BoxTree.box(parseTree.toTree()));
+         System.out.println(Boxes.box(parseTree.toTree()));
          BoxTree.dot(parseTree.toTree(), "test1.dot");
          System.out.println();
 
@@ -43,15 +45,15 @@ public class Main {
          System.out.println("===Infered types:==================");
          // System.out.println(parseTree.toTree().prettyPrint());
          // System.out.println();
-         System.out.println(BoxTree.box(parseTree.toTree()));
+         System.out.println(Boxes.box(parseTree.toTree()));
          // parseTree.toTree().map(new Function<String,String>() {
          // public String apply(String s) { return s.replace('\n', ':'); }
          // }).dot(new File(fileName).getName() + ".dot");
          // System.out.println();
       } catch (Exception e) {
-         // throw e;
          System.out.println("Compilation failed");
-         System.exit(1);
+         throw e;
+//         System.exit(1);
       }
    }
 

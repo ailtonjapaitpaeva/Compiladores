@@ -3,7 +3,7 @@ package panda.ErrorMsg;
 import java_cup.runtime.ComplexSymbolFactory.Location;
 
 public class Loc {
-   
+
    public Location left;
    public Location right;
 
@@ -18,7 +18,15 @@ public class Loc {
 
    @Override
    public String toString() {
-      return String.format("%s - %s", left.getUnit(), left, right);
+      if (left.getUnit().equals("unknown"))
+         return String.format("%d:%d-%d:%d",
+               left.getLine(), left.getColumn(),
+               right.getLine(), right.getColumn());
+      else
+         return String.format("%s-%d:%d-%d:%d",
+               left.getUnit(),
+               left.getLine(), left.getColumn(),
+               right.getLine(), right.getColumn());
    }
 
 }
