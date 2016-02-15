@@ -9,8 +9,6 @@ public abstract class Dec extends Absyn {
    }
 
    // do semantic analysis of the declaration
-   public void semant() {
-      throw new RuntimeException("unimplemented");
-   }
+   public abstract void semant() ;
 
 }

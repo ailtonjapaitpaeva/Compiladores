@@ -38,6 +38,7 @@ parser code
     this.errorMsg = errorMsg;
   }
 
+
   Loc loc(Location left, Location right) {
     return new Loc(left, right);
   }
@@ -59,9 +60,18 @@ parser code
   }
 :}
 
-terminal Long    LITINT;
-terminal Boolean LITBOOL;
-terminal         IF, THEN, ELSE;
+terminal Long    	LITINT;
+terminal Boolean 	LITBOOL;
+terminal         	IF, THEN, ELSE;
+terminal Double 	LITREAL;
+terminal Character 	LITCHAR;
+terminal 			WHILE, DO;
+terminal 			PLUS, MINUS, TIMES;
+terminal        	LPAREN, RPAREN, COMMA;
+terminal        	LBRACE, RBRACE, SEMI;
+terminal			VAR, ASSIGN, COLON;
+terminal			LET, IN;
+terminal 			BREAK;
 
 non terminal Exp program;
 non terminal Exp exp;
@@ -73,9 +83,12 @@ program ::=
   ;
 
 exp ::=
-  LITINT:x                          {: RESULT = new IntExp(loc(xxleft,xxright),x); :}
+  LITREAL:x                         {: RESULT = new RealExp(loc(xxleft,xxright),x); :}
+| LITINT:x                          {: RESULT = new IntExp(loc(xxleft,xxright),x); :}
 | LITBOOL:x                         {: RESULT = new BoolExp(loc(xxleft,xxright),x); :}
 | IF:i exp:t THEN exp:a ELSE exp:b  {: RESULT = new IfExp(loc(ixleft,bxright),t,a,b); :}
 | IF:i exp:t THEN exp:a             {: RESULT = new IfExp(loc(ixleft,axright),t,a,null); :}
-  ;
+| LITCHAR:x                         {: RESULT = new CharExp(loc(xxleft,xxright),x); :}
+| WHILE exp:test DO exp:result		{: RESULT = new WhileExp(loc(testxleft,resultxright),test,result); :}
+;
 

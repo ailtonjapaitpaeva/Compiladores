@@ -4,7 +4,7 @@ public class UNIT extends Type {
 
    public static final UNIT T = new UNIT();
 
-   private UNIT() {
+   UNIT() {
    }
 
    @Override

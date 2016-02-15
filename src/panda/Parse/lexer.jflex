@@ -71,11 +71,26 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 if                    { return tok(IF); }
 then                  { return tok(THEN); }
 else                  { return tok(ELSE); }
+while                 { return tok(WHILE); }
+do                 	  { return tok(DO); }
 
+in 						{ return tok(IN); }
+let						{ return tok(LET); }
+var						{ return tok(VAR); }
+":"						{ return tok(COLON); }
+":="					{ return tok(ASSIGN); }
+
+
+\+					{ return tok(PLUS); }
+
+[0-9]+\.[0-9]*       { return tok(LITREAL, new Double(yytext())); }
 
 0 | [1-9][0-9]*       { return tok(LITINT, new Long(yytext())); }
 
 true | false          { return tok(LITBOOL, new Boolean(yytext())); }
+
+[a-z|A-Z]	          { return tok(LITCHAR, new Character(yytext().charAt(0))); }
+
 
 .                     { error("illegal character: [" + yytext() + "]"); }
 }

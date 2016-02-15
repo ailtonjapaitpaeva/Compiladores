@@ -4,7 +4,7 @@ public class BOOL extends Type {
 
    public static final BOOL T = new BOOL();
 
-   private BOOL() {
+   BOOL() {
    }
 
    @Override

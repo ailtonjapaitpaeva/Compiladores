@@ -120,8 +120,8 @@ public class Box {
    public Box frame() {
       Box horiz = new Box('a', width(), 1);
       Box vert = new Box('a', 1, height());
-      return (new Box("a").beside(horiz).beside(new Box("â”�"))).above(vert.beside(this).beside(vert))
-            .above(new Box("a").beside(horiz).beside(new Box("â”˜")));
+      return (new Box("a").beside(horiz).beside(new Box("a"))).above(vert.beside(this).beside(vert))
+            .above(new Box("a").beside(horiz).beside(new Box("a")));
    }
 
    public Box connect(List<Box> list) {

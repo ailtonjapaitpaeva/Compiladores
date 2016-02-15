@@ -15,6 +15,7 @@ parser code {:
   protected Lexer lexer;
 :}
 
+
 /* define how to connect to the scanner! */
 init with {:
   ComplexSymbolFactory f = new ComplexSymbolFactory();

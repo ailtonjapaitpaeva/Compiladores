@@ -36,9 +36,9 @@ public class PandaCup extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\006\000\002\002\004\000\002\002\003\000\002\003" +
-    "\003\000\002\003\003\000\002\003\010\000\002\003\006" +
-    "" });
+    "\000\011\000\002\002\004\000\002\002\003\000\002\003" +
+    "\003\000\002\003\003\000\002\003\003\000\002\003\010" +
+    "\000\002\003\006\000\002\003\003\000\002\003\006" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -46,15 +46,23 @@ public class PandaCup extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\014\000\010\004\004\005\006\006\010\001\002\000" +
-    "\010\002\uffff\007\uffff\010\uffff\001\002\000\004\002\016" +
-    "\001\002\000\010\002\ufffe\007\ufffe\010\ufffe\001\002\000" +
-    "\004\002\000\001\002\000\010\004\004\005\006\006\010" +
-    "\001\002\000\004\007\012\001\002\000\010\004\004\005" +
-    "\006\006\010\001\002\000\010\002\ufffc\007\ufffc\010\014" +
-    "\001\002\000\010\004\004\005\006\006\010\001\002\000" +
-    "\010\002\ufffd\007\ufffd\010\ufffd\001\002\000\004\002\001" +
-    "\001\002" });
+    "\000\022\000\016\004\004\005\007\006\013\011\006\012" +
+    "\010\013\011\001\002\000\012\002\ufffe\007\ufffe\010\ufffe" +
+    "\014\ufffe\001\002\000\004\002\024\001\002\000\012\002" +
+    "\uffff\007\uffff\010\uffff\014\uffff\001\002\000\012\002\ufffd" +
+    "\007\ufffd\010\ufffd\014\ufffd\001\002\000\012\002\ufffa\007" +
+    "\ufffa\010\ufffa\014\ufffa\001\002\000\016\004\004\005\007" +
+    "\006\013\011\006\012\010\013\011\001\002\000\004\002" +
+    "\000\001\002\000\016\004\004\005\007\006\013\011\006" +
+    "\012\010\013\011\001\002\000\004\007\015\001\002\000" +
+    "\016\004\004\005\007\006\013\011\006\012\010\013\011" +
+    "\001\002\000\012\002\ufffb\007\ufffb\010\017\014\ufffb\001" +
+    "\002\000\016\004\004\005\007\006\013\011\006\012\010" +
+    "\013\011\001\002\000\012\002\ufffc\007\ufffc\010\ufffc\014" +
+    "\ufffc\001\002\000\004\014\022\001\002\000\016\004\004" +
+    "\005\007\006\013\011\006\012\010\013\011\001\002\000" +
+    "\012\002\ufff9\007\ufff9\010\ufff9\014\ufff9\001\002\000\004" +
+    "\002\001\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -62,11 +70,13 @@ public class PandaCup extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\014\000\006\002\004\003\006\001\001\000\002\001" +
+    "\000\022\000\006\002\004\003\011\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\004\003\010\001\001\000\002\001\001\000\004\003" +
-    "\012\001\001\000\002\001\001\000\004\003\014\001\001" +
-    "\000\002\001\001\000\002\001\001" });
+    "\000\002\001\001\000\004\003\020\001\001\000\002\001" +
+    "\001\000\004\003\013\001\001\000\002\001\001\000\004" +
+    "\003\015\001\001\000\002\001\001\000\004\003\017\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\003\022" +
+    "\001\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -113,6 +123,7 @@ public class PandaCup extends java_cup.runtime.lr_parser {
     this.errorMsg = errorMsg;
   }
 
+
   Loc loc(Location left, Location right) {
     return new Loc(left, right);
   }
@@ -140,7 +151,8 @@ class CUP$PandaCup$actions {
 
 //@@CUPDBG0
 
-  //static Loc loc()
+  //static Loc loc() 
+
   //{
   //  return new Loc();
   //}
@@ -198,33 +210,46 @@ class CUP$PandaCup$actions {
           return CUP$PandaCup$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // exp ::= LITINT 
+          case 2: // exp ::= LITREAL 
+            {
+              Exp RESULT =null;
+		Location xxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xleft;
+		Location xxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xright;
+		Double x = (Double)((java_cup.runtime.Symbol) CUP$PandaCup$stack.peek()).value;
+		//@@CUPDBG3
+ RESULT = new RealExp(loc(xxleft,xxright),x); 
+              CUP$PandaCup$result = parser.getSymbolFactory().newSymbol("exp",1, ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), RESULT);
+            }
+          return CUP$PandaCup$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 3: // exp ::= LITINT 
             {
               Exp RESULT =null;
 		Location xxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xleft;
 		Location xxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xright;
 		Long x = (Long)((java_cup.runtime.Symbol) CUP$PandaCup$stack.peek()).value;
-		//@@CUPDBG3
+		//@@CUPDBG4
  RESULT = new IntExp(loc(xxleft,xxright),x); 
               CUP$PandaCup$result = parser.getSymbolFactory().newSymbol("exp",1, ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), RESULT);
             }
           return CUP$PandaCup$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // exp ::= LITBOOL 
+          case 4: // exp ::= LITBOOL 
             {
               Exp RESULT =null;
 		Location xxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xleft;
 		Location xxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xright;
 		Boolean x = (Boolean)((java_cup.runtime.Symbol) CUP$PandaCup$stack.peek()).value;
-		//@@CUPDBG4
+		//@@CUPDBG5
  RESULT = new BoolExp(loc(xxleft,xxright),x); 
               CUP$PandaCup$result = parser.getSymbolFactory().newSymbol("exp",1, ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), RESULT);
             }
           return CUP$PandaCup$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // exp ::= IF exp THEN exp ELSE exp 
+          case 5: // exp ::= IF exp THEN exp ELSE exp 
             {
               Exp RESULT =null;
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.elementAt(CUP$PandaCup$top-5)).xleft;
@@ -239,14 +264,14 @@ class CUP$PandaCup$actions {
 		Location bxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xleft;
 		Location bxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xright;
 		Exp b = (Exp)((java_cup.runtime.Symbol) CUP$PandaCup$stack.peek()).value;
-		//@@CUPDBG5
+		//@@CUPDBG6
  RESULT = new IfExp(loc(ixleft,bxright),t,a,b); 
               CUP$PandaCup$result = parser.getSymbolFactory().newSymbol("exp",1, ((java_cup.runtime.Symbol)CUP$PandaCup$stack.elementAt(CUP$PandaCup$top-5)), ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), RESULT);
             }
           return CUP$PandaCup$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // exp ::= IF exp THEN exp 
+          case 6: // exp ::= IF exp THEN exp 
             {
               Exp RESULT =null;
 		Location ixleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.elementAt(CUP$PandaCup$top-3)).xleft;
@@ -258,8 +283,37 @@ class CUP$PandaCup$actions {
 		Location axleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xleft;
 		Location axright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xright;
 		Exp a = (Exp)((java_cup.runtime.Symbol) CUP$PandaCup$stack.peek()).value;
-		//@@CUPDBG6
+		//@@CUPDBG7
  RESULT = new IfExp(loc(ixleft,axright),t,a,null); 
+              CUP$PandaCup$result = parser.getSymbolFactory().newSymbol("exp",1, ((java_cup.runtime.Symbol)CUP$PandaCup$stack.elementAt(CUP$PandaCup$top-3)), ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), RESULT);
+            }
+          return CUP$PandaCup$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // exp ::= LITCHAR 
+            {
+              Exp RESULT =null;
+		Location xxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xleft;
+		Location xxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xright;
+		Character x = (Character)((java_cup.runtime.Symbol) CUP$PandaCup$stack.peek()).value;
+		//@@CUPDBG8
+ RESULT = new CharExp(loc(xxleft,xxright),x); 
+              CUP$PandaCup$result = parser.getSymbolFactory().newSymbol("exp",1, ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), RESULT);
+            }
+          return CUP$PandaCup$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // exp ::= WHILE exp DO exp 
+            {
+              Exp RESULT =null;
+		Location testxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.elementAt(CUP$PandaCup$top-2)).xleft;
+		Location testxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.elementAt(CUP$PandaCup$top-2)).xright;
+		Exp test = (Exp)((java_cup.runtime.Symbol) CUP$PandaCup$stack.elementAt(CUP$PandaCup$top-2)).value;
+		Location resultxleft = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xleft;
+		Location resultxright = ((java_cup.runtime.ComplexSymbolFactory.ComplexSymbol)CUP$PandaCup$stack.peek()).xright;
+		Exp result = (Exp)((java_cup.runtime.Symbol) CUP$PandaCup$stack.peek()).value;
+		//@@CUPDBG9
+ RESULT = new WhileExp(loc(testxleft,resultxright),test,result); 
               CUP$PandaCup$result = parser.getSymbolFactory().newSymbol("exp",1, ((java_cup.runtime.Symbol)CUP$PandaCup$stack.elementAt(CUP$PandaCup$top-3)), ((java_cup.runtime.Symbol)CUP$PandaCup$stack.peek()), RESULT);
             }
           return CUP$PandaCup$result;
