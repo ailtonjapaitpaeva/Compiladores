@@ -10,7 +10,7 @@ import panda.Util.ToTree;
 public class Symbol implements ToTree<String> {
    private String name;
 
-   private Symbol(String n) {
+   public Symbol(String n) {
       name = n;
    }
 

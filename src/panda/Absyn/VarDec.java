@@ -1,13 +1,15 @@
 package panda.Absyn;
 
 
-import java.awt.Window.Type;
 
 import javaslang.collection.Tree;
 import javaslang.collection.Tree.Node;
+import panda.Env.Env;
+import panda.Env.VarEntry;
 import panda.ErrorMsg.Loc;
 import panda.Symbol.Symbol;
-import panda.Types.Types;
+import panda.Types.INT;
+import panda.Types.Type;
 import panda.Util.*;
 
 public class VarDec extends Dec {
@@ -15,12 +17,12 @@ public class VarDec extends Dec {
 	public Symbol varName;
 	public Symbol typeName;
 	public Exp init;
-	
+
 	public VarDec(Loc loc) {
 		super(loc);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public VarDec(Loc loc, Symbol varName, Symbol typeName, Exp init) {
 		super(loc);
 		this.init = init;
@@ -28,7 +30,7 @@ public class VarDec extends Dec {
 		this.varName = varName;
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public VarDec(Loc loc, Symbol varName, Exp init) {
 		super(loc);
 		this.init = init;
@@ -45,31 +47,47 @@ public class VarDec extends Dec {
 
 	@Override
 	public Node<String> toTree() {
-		return this.init.toTree();
+		if(typeName != null)
+		{
+			return 	Tree.of("VarDec"  ,
+					Tree.of(varName.toString()),
+					Tree.of(typeName.toString()) , 
+					init.toTree());
+		}
+		return 	Tree.of("VarDec"  ,
+				Tree.of(varName.toString()),
+				init.toTree());
 	}
 
 	@Override
 	public void semant() {
-		
-		panda.Types.Type t = ENV.tenv.get(this.typeName);
+
+		Type t_init = init.semant();
+		Type t_var;
+
+
+		//panda.Types.Type t = ENV.tenv.get(this.typeName);
 		if(this.typeName == null)
 		{
-			//this.typeName = env.tenv.get(this.init.);
+			t_var = t_init;
 		}
-		
-		
-		if(t == null)
+		else
 		{
-			System.out.println("function type error");
-			return;
+			t_var = ENV.tenv.get(typeName);
+
+			if(t_var == null)
+			{
+				error("unknow type %s", typeName);
+				t_var = INT.T;
+			}
+			if(!t_init.coerceTo(t_var) )
+			{
+				init.error("type mismatch : expected %s but is %s ", t_var, t_init);
+			}
 		}
-		if(!t.coerceTo(this.init.semant()))
-		{
-			System.out.println("Exp error");
-			return;
-		}
-		ENV.tenv.put(this.varName, t);
 		
+		ENV.venv.put(varName, new VarEntry(t_var) );
+
 	}
 
 }
