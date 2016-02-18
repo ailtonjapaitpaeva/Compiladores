@@ -36,7 +36,7 @@ public class LetExp extends Exp {
 		
 	}
 	
-	protected Type TypeCheck() {
+	protected Type typeCheck() {
 		
 		ENV.tenv.beginScope();
 		ENV.venv.beginScope();

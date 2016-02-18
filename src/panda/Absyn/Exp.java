@@ -18,9 +18,9 @@ public abstract class Exp extends Absyn {
    }
 
    // type check the expression
-   protected Type typeCheck() {
-      throw new RuntimeException("unimplemented");
-   }
+   protected  abstract Type typeCheck(); //{
+      //throw new RuntimeException("unimplemented");
+   //}
 
    // obtain the type of the expression as a string
    protected String tp(String x) {

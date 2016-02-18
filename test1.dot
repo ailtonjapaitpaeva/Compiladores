@@ -1,7 +1,15 @@
 digraph AST {
-	root [label="IfExp"];
-		root_1 [label="BoolExp: true"];
+	root [label="LetExp"];
+		root_1 [label="Decs"];
+			root_1_1 [label="VarDec"];
+				root_1_1_1 [label="peso"];
+			root_1_1 -> root_1_1_1;
+				root_1_1_2 [label="IntExp: 24"];
+			root_1_1 -> root_1_1_2;
+		root_1 -> root_1_1;
 	root -> root_1;
-		root_2 [label="IntExp: 10"];
+		root_2 [label="VarExp"];
+			root_2_1 [label="SimpleVar : peso"];
+		root_2 -> root_2_1;
 	root -> root_2;
 }

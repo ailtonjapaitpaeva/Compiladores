@@ -78,18 +78,24 @@ in 						{ return tok(IN); }
 let						{ return tok(LET); }
 var						{ return tok(VAR); }
 ":"						{ return tok(COLON); }
-":="					{ return tok(ASSIGN); }
+
+"="						{ return tok(EQ); }
 
 
-\+					{ return tok(PLUS); }
+\+						{ return tok(PLUS); }
 
-[0-9]+\.[0-9]*       { return tok(LITREAL, new Double(yytext())); }
+"'"[a-z|A-Z]"'"	          { return tok(LITCHAR, new Character(yytext().charAt(0))); }
+
+[0-9]+\.[0-9]*       	{ return tok(LITREAL, new Double(yytext())); }
 
 0 | [1-9][0-9]*       { return tok(LITINT, new Long(yytext())); }
 
 true | false          { return tok(LITBOOL, new Boolean(yytext())); }
 
-[a-z|A-Z]	          { return tok(LITCHAR, new Character(yytext().charAt(0))); }
+
+[a-zA-Z] [a-zA-Z0-9]* { return tok (ID, new panda.Symbol.Symbol(yytext())); }
+
+
 
 
 .                     { error("illegal character: [" + yytext() + "]"); }

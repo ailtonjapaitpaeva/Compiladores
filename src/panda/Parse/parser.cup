@@ -62,6 +62,7 @@ parser code
 
 terminal Long    	LITINT;
 terminal Boolean 	LITBOOL;
+terminal Symbol 	ID;
 terminal         	IF, THEN, ELSE;
 terminal Double 	LITREAL;
 terminal Character 	LITCHAR;
@@ -71,16 +72,26 @@ terminal        	LPAREN, RPAREN, COMMA;
 terminal        	LBRACE, RBRACE, SEMI;
 terminal			VAR, ASSIGN, COLON;
 terminal			LET, IN;
-terminal 			BREAK;
+terminal 			BREAK, EQ;
 
-non terminal Exp program;
-non terminal Exp exp;
+
+non terminal Exp 		program;
+non terminal Exp 		exp;
+non terminal Var 		var;
+non terminal Dec  		dec;
+non terminal List<Dec> decs;
 
 start with program;
 
 program ::=
   exp:x                             {: RESULT = x; :}
+  
   ;
+
+var ::= 
+	ID:v 							{: RESULT = new SimpleVar(loc(vxleft,vxright),v); :}
+
+;
 
 exp ::=
   LITREAL:x                         {: RESULT = new RealExp(loc(xxleft,xxright),x); :}
@@ -90,5 +101,17 @@ exp ::=
 | IF:i exp:t THEN exp:a             {: RESULT = new IfExp(loc(ixleft,axright),t,a,null); :}
 | LITCHAR:x                         {: RESULT = new CharExp(loc(xxleft,xxright),x); :}
 | WHILE exp:test DO exp:result		{: RESULT = new WhileExp(loc(testxleft,resultxright),test,result); :}
+| LET:l decs:d IN exp:x				{: RESULT = new LetExp(loc(lxleft,xxright),d,x); :}
+| var: v							{: RESULT = new VarExp(loc(vxleft,vxright),v); :}
+
 ;
 
+dec ::=
+	VAR:v ID:n COLON ID:t EQ exp:e 	{: RESULT = new VarDec(loc(vxleft,exright), n, t ,e); :}
+|	VAR:v ID:n  EQ exp:e 			{: RESULT = new VarDec(loc(vxleft,exright), n, null ,e); :}
+;
+
+decs::=
+	dec:d							{: RESULT = List.of(d); :}
+|	dec:d decs:ds 					{: RESULT = ds.prepend(d); :}
+;
