@@ -10,6 +10,7 @@ public class Box {
    public Box() {
       contents = new String[0];
    }
+   
 
    public Box(char c) {
       this("" + c);
