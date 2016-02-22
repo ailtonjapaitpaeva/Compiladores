@@ -1,4 +1,4 @@
-    <project name="Panda" default="compile" basedir=".">
+    <project name="MyProject" default="compile" basedir=".">
 	
 	  <property name="java"     location="src"       />
 	  <property name="classes"  location="bin/cls"   />
@@ -12,21 +12,22 @@
 
 	  <target name="generate">
 	    
-	    <cup srcfile="${java}/panda/Parse/parser.cup"  destdir="${java}"
-	    	  package="panda.Parse"
+	    <cup srcfile="${java}/Parse/parser.cup"  destdir="${java}"
+	    	  package="Parse"
 	          parser="PandaCup"
 	    	  symbols="PandaSym"
 			  interface="true"
 	    	  expect="1"
 	  	      locations="true"
 	          debugsymbols="true" />
-	  	<jflex  file="${java}/panda/Parse/lexer.jflex" destdir="${java}" />
+	  	<jflex  file="${java}/Parse/lexer.jflex" destdir="${java}" />
 	  </target>
 
 	  <path id="libraries">
         <files includes="${tools}/java-cup-11b-runtime.jar" />
         <files includes="${tools}/javaslang-2.0.0-RC3.jar" />
         <files includes="${tools}/javaslang-render.jar" />
+        <files includes="${tools}/junit-4.12.jar" />
 	  </path>
 
 	  <target name="compile" depends="generate">
@@ -39,9 +40,9 @@
 	  </target>
 
 	  <target name="clean">
-	    <delete file="${java}/panda/Parse/PandaCup.java" />
-	    <delete file="${java}/panda/Parse/PandaSym.java" />
-	    <delete file="${java}/panda/Parse/PandaLex.java" />
+	    <delete file="${java}/Parse/PandaCup.java" />
+	    <delete file="${java}/Parse/PandaSym.java" />
+	    <delete file="${java}/Parse/PandaLex.java" />
 	    <delete dir="${classes}" />
 	    <delete dir="${result}" />
 	  </target>
