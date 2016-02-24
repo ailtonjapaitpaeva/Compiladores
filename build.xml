@@ -1,4 +1,4 @@
-    <project name="MyProject" default="compile" basedir=".">
+    <project name="Panda" default="compile" basedir=".">
 	
 	  <property name="java"     location="src"       />
 	  <property name="classes"  location="bin/cls"   />
@@ -22,7 +22,9 @@
 	          debugsymbols="true" />
 	  	<jflex  file="${java}/Parse/lexer.jflex" destdir="${java}" />
 	  </target>
-
+    	
+    	
+    
 	  <path id="libraries">
         <files includes="${tools}/java-cup-11b-runtime.jar" />
         <files includes="${tools}/javaslang-2.0.0-RC3.jar" />
